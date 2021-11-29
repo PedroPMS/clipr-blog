@@ -15,6 +15,7 @@ class Comment
     use Timestamps;
 
     /**
+     * @Groups({"comment"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -22,6 +23,7 @@ class Comment
     private $id;
 
     /**
+     * @Groups({"comment"})
      * @ORM\Column(type="text")
      */
     private $content;
@@ -34,6 +36,18 @@ class Comment
     private $post;
 
     /**
+     * @Groups({"comment"})
+     * @ORM\Column(type="text")
+     */
+    private $userId;
+
+    /**
+     * @Groups({"comment"})
+     * @ORM\Column(type="text")
+     */
+    private $postId;
+
+    /**
      * @Groups({"user_detail"})
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      */
@@ -42,6 +56,18 @@ class Comment
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUserId(): ?int
+    {
+        $user = $this->getUser();
+
+        return $user ? $user->getId() : null;
+    }
+
+    public function getPostId(): ?int
+    {
+        return $this->getPost()->getId();
     }
 
     public function getContent(): ?string

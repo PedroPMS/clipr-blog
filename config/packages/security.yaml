@@ -41,4 +41,5 @@ security:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/post, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }
+        - { path: ^/api/post/[0-9]+/comment, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST, GET] }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
