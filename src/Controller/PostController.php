@@ -68,6 +68,7 @@ class PostController extends AbstractController
      */
     public function edit(Request $request, PostService $postService, Post $post, EntityManagerInterface $entityManager): View
     {
+        $this->denyAccessUnlessGranted('ROLE_WRITER');
         $isValidUser = $postService->checkUserOfPost($this->getUser(), $post);
         if (!$isValidUser) {
             return View::create(['message' => 'You cannot update this post'], Response::HTTP_UNAUTHORIZED);
@@ -89,8 +90,9 @@ class PostController extends AbstractController
     /**
      * @Rest\Delete("/api/post/{id}", name="post_delete")
      */
-    public function delete(Request $request, PostService $postService, Post $post, EntityManagerInterface $entityManager): View
+    public function delete(PostService $postService, Post $post, EntityManagerInterface $entityManager): View
     {
+        $this->denyAccessUnlessGranted('ROLE_WRITER');
         $isValidUser = $postService->checkUserOfPost($this->getUser(), $post);
         if (!$isValidUser) {
             return View::create(['message' => 'You cannot update this post'], Response::HTTP_UNAUTHORIZED);
