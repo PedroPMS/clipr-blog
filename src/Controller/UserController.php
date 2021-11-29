@@ -21,4 +21,15 @@ class UserController extends AbstractFOSRestController
 
         return  View::create($users);
     }
+
+    /**
+     * @Rest\Get("/api/profile", name="user_profile")
+     * @Rest\View(serializerGroups={"user"})
+     */
+    public function show(UserRepository $userRepository): View
+    {
+        $user = $userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+
+        return  View::create($user);
+    }
 }
