@@ -12,13 +12,13 @@ class BaseTestCase extends WebTestCase
         $client->request(
             'POST',
             '/api/login_check',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
-            json_encode(array(
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'username' => $username,
                 'password' => $password,
-            ))
+            ])
         );
 
         $data = json_decode($client->getResponse()->getContent(), true);

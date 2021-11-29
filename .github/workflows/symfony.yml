@@ -33,6 +33,8 @@ jobs:
       run: |
         mkdir -p data
         touch data/database.sqlite
+        php bin/console doctrine:database:create --no-interaction
+        php bin/console doctrine:schema:create --no-interaction
     - name: Run Migrations
       run: |
         php bin/console doctrine:migrations:migrate --no-interaction
