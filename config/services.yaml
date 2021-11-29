@@ -6,6 +6,10 @@
 parameters:
 
 services:
+    Symfony\Component\Serializer\Normalizer\DateTimeNormalizer:
+        arguments:
+            $defaultContext:
+                datetime_format: 'Y-m-d\TH:i:s.v\Z'
     get_set_method_normalizer:
         class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
         tags: [ serializer.normalizer ]
