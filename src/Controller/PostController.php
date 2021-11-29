@@ -18,7 +18,7 @@ class PostController extends AbstractController
 {
     /**
      * @Rest\Get("/api/post", name="post_list")
-     * @Rest\View(serializerGroups={"post", "timestamps"})
+     * @Rest\View(serializerGroups={"post", "timestamps", "comment"})
      */
     public function index(PostRepository $postRepository): View
     {
@@ -29,7 +29,7 @@ class PostController extends AbstractController
 
     /**
      * @Rest\Get("/api/post/user", name="users_post_list")
-     * @Rest\View(serializerGroups={"post", "timestamps"})
+     * @Rest\View(serializerGroups={"post", "timestamps", "comment"})
      */
     public function getUsersPosts(PostRepository $postRepository): View
     {
@@ -40,7 +40,7 @@ class PostController extends AbstractController
 
     /**
      * @Rest\Post("/api/post", name="post_create")
-     * @Rest\View(serializerGroups={"post", "timestamps"})
+     * @Rest\View(serializerGroups={"post", "timestamps", "comment"})
      */
     public function create(Request $request, EntityManagerInterface $entityManager): View
     {
@@ -64,7 +64,7 @@ class PostController extends AbstractController
 
     /**
      * @Rest\Put("/api/post/{id}", name="post_update")
-     * @Rest\View(serializerGroups={"post", "timestamps"})
+     * @Rest\View(serializerGroups={"post", "timestamps", "comment"})
      */
     public function edit(Request $request, PostService $postService, Post $post, EntityManagerInterface $entityManager): View
     {

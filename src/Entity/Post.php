@@ -50,6 +50,12 @@ class Post
      */
     private $user;
 
+    /**
+     * @Groups({"post"})
+     * @ORM\Column(type="integer")
+     */
+    private $userId;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -58,6 +64,11 @@ class Post
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->getUser()->getId();
     }
 
     public function getTitle(): ?string

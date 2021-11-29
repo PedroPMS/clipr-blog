@@ -37,13 +37,13 @@ class Comment
 
     /**
      * @Groups({"comment"})
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="integer")
      */
     private $userId;
 
     /**
      * @Groups({"comment"})
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="integer")
      */
     private $postId;
 
