@@ -25,8 +25,6 @@ class CommentController extends AbstractController
      *
      * List all comments of a post.
      *
-     * List all comments of a specific post.
-     *
      * @OA\Response(
      *     response=200,
      *     description="Returns all comments of a post",
@@ -35,6 +33,12 @@ class CommentController extends AbstractController
      *        @OA\Items(ref=@Model(type= App\Entity\Comment::class, groups={"comment", "timestamps"}))
      *     )
      * )
+     *
+     * @OA\Response(
+     *     response=404,
+     *     description="Post not found"
+     * )
+     *
      * @OA\Tag(name="Comment")
      * @Security(name="Bearer")
      */
@@ -66,10 +70,17 @@ class CommentController extends AbstractController
      *        @OA\Items(ref=@Model(type= App\Entity\Comment::class, groups={"comment", "timestamps"}))
      *     )
      * )
+     *
      * @OA\Response(
      *     response=422,
      *     description="Invalid data"
-     * ),
+     * )
+     *
+     * @OA\Response(
+     *     response=404,
+     *     description="Post not found"
+     * )
+     *
      * @OA\Tag(name="Comment")
      */
     public function create(Request $request, Post $post, EntityManagerInterface $entityManager): View

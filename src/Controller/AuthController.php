@@ -10,6 +10,9 @@ use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 
 class AuthController extends AbstractController
 {
@@ -20,6 +23,29 @@ class AuthController extends AbstractController
         $this->registerService = $registerService;
     }
 
+    /**
+     * Create a post.
+     *
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *     mediaType="application/json",
+     *          @OA\Schema(ref=@Model(type= App\Form\RegistrationFormType::class))
+     *     )
+     * )
+     *
+     *
+     * @OA\Response(
+     *     response=422,
+     *     description="Invalid data"
+     * )
+     *
+     * @OA\Response(
+     *     response=201,
+     *     description="User created"
+     * )
+     *
+     * @OA\Tag(name="Auth")
+     */
     public function register(Request $request): View
     {
         $user = new User();

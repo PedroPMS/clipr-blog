@@ -18,8 +18,6 @@ class UserController extends AbstractFOSRestController
      *
      * List all users.
      *
-     * List all users and roles for admins.
-     *
      * @OA\Response(
      *     response=200,
      *     description="Returns all users",
@@ -28,6 +26,7 @@ class UserController extends AbstractFOSRestController
      *        @OA\Items(ref=@Model(type= App\Entity\User::class, groups={"user"}))
      *     )
      * )
+     *
      * @OA\Tag(name="User")
      * @Security(name="Bearer")
      */
@@ -45,8 +44,6 @@ class UserController extends AbstractFOSRestController
      * @Rest\View(serializerGroups={"user"})
      *
      * Detail specified user.
-     *
-     * Return the data of logged user.
      *
      * @OA\Response(
      *     response=200,
