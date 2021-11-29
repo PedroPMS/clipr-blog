@@ -2,26 +2,20 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Role;
 use App\Entity\User;
-use App\Repository\RoleRepository;
-use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
-    private UserPasswordEncoderInterface $encoder;
-    private RoleRepository $roleRepository;
-    private EntityManagerInterface $em;
+    public const USER_WRITER = 'writer-user';
 
-    public function __construct(UserPasswordEncoderInterface $encoder, RoleRepository $roleRepository, EntityManagerInterface $em)
+    private UserPasswordEncoderInterface $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
-        $this->roleRepository = $roleRepository;
-        $this->em = $em;
     }
 
     public function load(ObjectManager $manager): void
@@ -43,6 +37,7 @@ class UserFixtures extends Fixture
 
             $manager->persist($newUser);
         }
+        $this->addReference(self::USER_WRITER, $newUser);
 
         $manager->flush();
     }
