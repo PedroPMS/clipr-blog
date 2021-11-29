@@ -16,9 +16,9 @@ class UserController extends AbstractFOSRestController
      * @Rest\Get("/api/users", name="users_list")
      * @Rest\View(serializerGroups={"user"})
      *
-     * List the rewards of the specified user.
+     * List all users.
      *
-     * This call takes into account all confirmed awards, but not pending or refused awards.
+     * List all users and roles for admins.
      *
      * @OA\Response(
      *     response=200,
@@ -28,7 +28,7 @@ class UserController extends AbstractFOSRestController
      *        @OA\Items(ref=@Model(type= App\Entity\User::class, groups={"user"}))
      *     )
      * )
-     * @OA\Tag(name="user")
+     * @OA\Tag(name="User")
      * @Security(name="Bearer")
      */
     public function index(UserRepository $userRepository): View
@@ -44,16 +44,16 @@ class UserController extends AbstractFOSRestController
      * @Rest\Get("/api/profile", name="user_profile")
      * @Rest\View(serializerGroups={"user"})
      *
-     * List the rewards of the specified user.
+     * Detail specified user.
      *
-     * This call takes into account all confirmed awards, but not pending or refused awards.
+     * Return the data of logged user.
      *
      * @OA\Response(
      *     response=200,
      *     description="Returns the rewards of an user",
      *     @OA\JsonContent(ref=@Model(type= App\Entity\User::class, groups={"user"}))
      * )
-     * @OA\Tag(name="user")
+     * @OA\Tag(name="User")
      * @Security(name="Bearer")
      */
     public function show(UserRepository $userRepository): View
