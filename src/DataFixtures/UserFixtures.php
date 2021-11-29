@@ -6,10 +6,11 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const USER_WRITER = 'writer-user';
+    public const USER_WRITER = 'writer';
 
     private UserPasswordEncoderInterface $encoder;
 
@@ -40,5 +41,12 @@ class UserFixtures extends Fixture
         $this->addReference(self::USER_WRITER, $newUser);
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [
+            RoleFixtures::class
+        ];
     }
 }
