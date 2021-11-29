@@ -12,7 +12,7 @@ class UserTest extends BaseTestCase
         $client = $this->createAuthenticatedClient();
         $client->request('GET', '/api/users');
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     public function test_attempt_to_get_all_users_as_writer(): void
@@ -20,7 +20,7 @@ class UserTest extends BaseTestCase
         $client = $this->createAuthenticatedClient('writer@gmail.com');
         $client->request('GET', '/api/users');
 
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
     public function test_attempt_to_get_profile_as_admin(): void
@@ -28,7 +28,7 @@ class UserTest extends BaseTestCase
         $client = $this->createAuthenticatedClient();
         $client->request('GET', '/api/profile');
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     public function test_attempt_to_get_profile_as_write(): void
@@ -36,6 +36,6 @@ class UserTest extends BaseTestCase
         $client = $this->createAuthenticatedClient('writer@gmail.com');
         $client->request('GET', '/api/profile');
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

@@ -22,7 +22,7 @@ class CreateTest extends BaseTestCase
             ])
         );
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     public function test_attempt_to_create_a_new_post_as_a_not_writer(): void
@@ -40,7 +40,7 @@ class CreateTest extends BaseTestCase
             ])
         );
 
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
     public function test_attempt_to_create_a_new_post_with_invalid_data(): void
@@ -55,6 +55,6 @@ class CreateTest extends BaseTestCase
             json_encode([])
         );
 
-        $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

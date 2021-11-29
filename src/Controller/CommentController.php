@@ -51,6 +51,6 @@ class CommentController extends AbstractController
 
         $entityManager->persist($comment);
         $entityManager->flush();
-        return View::create($comment);
+        return View::create($comment, Response::HTTP_CREATED);
     }
 }

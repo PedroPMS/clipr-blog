@@ -12,7 +12,7 @@ class ListTest extends BaseTestCase
         $client = $this->createAuthenticatedClient();
         $client->request('GET', '/api/post');
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     public function test_attempt_to_get_all_post_as_anonymous(): void
@@ -20,7 +20,7 @@ class ListTest extends BaseTestCase
         $client = static::createClient();
         $client->request('GET', '/api/post');
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     public function test_attempt_to_get_all_post_of_the_logged_user(): void
@@ -28,6 +28,6 @@ class ListTest extends BaseTestCase
         $client = $this->createAuthenticatedClient();
         $client->request('GET', '/api/post/user');
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

@@ -59,7 +59,7 @@ class PostController extends AbstractController
 
         $entityManager->persist($post);
         $entityManager->flush();
-        return View::create($post);
+        return View::create($post, Response::HTTP_CREATED);
     }
 
     /**
