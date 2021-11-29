@@ -12,6 +12,7 @@ use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends AbstractController
 {
@@ -45,7 +46,7 @@ class CommentController extends AbstractController
         $form->submit($body);
 
         if (!$form->isValid()) {
-            return View::create((new ValidationErrorsHandler())($form));
+            return View::create((new ValidationErrorsHandler())($form), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $entityManager->persist($comment);

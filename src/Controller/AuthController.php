@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Service\Auth\AuthService;
+use App\Utils\ValidationErrorsHandler;
+use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends AbstractController
 {
@@ -19,7 +20,7 @@ class AuthController extends AbstractController
         $this->registerService = $registerService;
     }
 
-    public function register(Request $request): JsonResponse
+    public function register(Request $request): View
     {
         $user = new User();
 
@@ -29,23 +30,10 @@ class AuthController extends AbstractController
         $form->submit($body);
 
         if (!$form->isValid()) {
-            return $this->handleValidationErrors($form);
+            return View::create((new ValidationErrorsHandler())($form), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $this->registerService->register($user, $form);
-        return $this->json(['message' => 'User successfully created'], 201);
-    }
-
-    private function handleValidationErrors(FormInterface $form): JsonResponse
-    {
-        $errors = [];
-        foreach ($form->getErrors(true, true) as $error) {
-            $errors[$error->getOrigin()->getName()] = $error->getMessage();
-        }
-
-        return $this->json([
-            'message' => 'The given data was invalid.',
-            'errors' => $errors
-        ]);
+        return View::create(['message' => 'User successfully created'], Response::HTTP_CREATED);
     }
 }

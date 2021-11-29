@@ -54,7 +54,7 @@ class PostController extends AbstractController
         $form->submit($body);
 
         if (!$form->isValid()) {
-            return View::create((new ValidationErrorsHandler())($form));
+            return View::create((new ValidationErrorsHandler())($form), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $entityManager->persist($post);
@@ -80,7 +80,7 @@ class PostController extends AbstractController
         $form->submit($body, false);
 
         if (!$form->isValid()) {
-            return View::create((new ValidationErrorsHandler())($form));
+            return View::create((new ValidationErrorsHandler())($form), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $entityManager->flush();
