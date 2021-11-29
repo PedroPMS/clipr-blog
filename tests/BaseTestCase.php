@@ -22,6 +22,7 @@ class BaseTestCase extends WebTestCase
         );
 
         $data = json_decode($client->getResponse()->getContent(), true);
+        dump($data);
 
         $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
 

@@ -22,7 +22,7 @@ class CreateTest extends BaseTestCase
             ])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
     }
 
     public function test_attempt_to_create_a_new_post_as_a_not_writer(): void
