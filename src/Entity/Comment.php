@@ -58,6 +58,13 @@ class Comment
         return $this->id;
     }
 
+    public function getUserId(): ?int
+    {
+        $user = $this->getUser();
+
+        return $user ? $user->getId() : null;
+    }
+
     public function getPostId(): ?int
     {
         return $this->getPost()->getId();
