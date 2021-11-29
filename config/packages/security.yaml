@@ -38,6 +38,7 @@ security:
             provider: app_user_provider
 
     access_control:
+        - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/post, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }
