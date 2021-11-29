@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Role
 {
     /**
+     * @Groups({"user"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -20,21 +22,25 @@ class Role
     private $id;
 
     /**
+     * @Groups({"user"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Groups({"user"})
      * @ORM\Column(type="string", length=255)
      */
     private $roleName;
 
     /**
+     * @Groups({"user"})
      * @ORM\Column(type="boolean")
      */
     private $status;
 
     /**
+     * @Groups("user_detail")
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="role")
      */
     private $users;
