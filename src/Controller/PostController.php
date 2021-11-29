@@ -28,6 +28,17 @@ class PostController extends AbstractController
     }
 
     /**
+     * @Rest\Get("/api/post/user", name="users_post_list")
+     * @Rest\View(serializerGroups={"post", "timestamps"})
+     */
+    public function getUsersPosts(PostRepository $postRepository): View
+    {
+        $posts = $postRepository->findBy(['user' => $this->getUser()->getId()]);
+
+        return View::create($posts);
+    }
+
+    /**
      * @Rest\Post("/api/post", name="post_create")
      * @Rest\View(serializerGroups={"post", "timestamps"})
      */
