@@ -12,6 +12,9 @@ use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends AbstractController
@@ -19,6 +22,21 @@ class CommentController extends AbstractController
     /**
      * @Rest\Get("/api/post/{id}/comment", name="post_comment_list")
      * @Rest\View(serializerGroups={"comment", "timestamps"})
+     *
+     * List all comments of a post.
+     *
+     * List all comments of a specific post.
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns all comments of a post",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type= App\Entity\Comment::class, groups={"comment", "timestamps"}))
+     *     )
+     * )
+     * @OA\Tag(name="Comment")
+     * @Security(name="Bearer")
      */
     public function index(Post $post, CommentRepository $commentRepository): View
     {
@@ -30,6 +48,29 @@ class CommentController extends AbstractController
     /**
      * @Rest\Post("/api/post/{id}/comment", name="post_comment_create")
      * @Rest\View(serializerGroups={"comment", "timestamps"})
+     *
+     * Create a comment in a post.
+     *
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *     mediaType="application/json",
+     *          @OA\Schema(ref=@Model(type= App\Form\CommentType::class))
+     *     )
+     * )
+     *
+     * @OA\Response(
+     *     response=201,
+     *     description="Create a comment in a post",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type= App\Entity\Comment::class, groups={"comment", "timestamps"}))
+     *     )
+     * )
+     * @OA\Response(
+     *     response=422,
+     *     description="Invalid data"
+     * ),
+     * @OA\Tag(name="Comment")
      */
     public function create(Request $request, Post $post, EntityManagerInterface $entityManager): View
     {

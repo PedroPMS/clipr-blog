@@ -22,7 +22,7 @@ class UserController extends AbstractFOSRestController
      *
      * @OA\Response(
      *     response=200,
-     *     description="Returns the rewards of an user",
+     *     description="Returns all users",
      *     @OA\JsonContent(
      *        type="array",
      *        @OA\Items(ref=@Model(type= App\Entity\User::class, groups={"user"}))
@@ -50,7 +50,7 @@ class UserController extends AbstractFOSRestController
      *
      * @OA\Response(
      *     response=200,
-     *     description="Returns the rewards of an user",
+     *     description="Returns user profile",
      *     @OA\JsonContent(ref=@Model(type= App\Entity\User::class, groups={"user"}))
      * )
      * @OA\Tag(name="User")
