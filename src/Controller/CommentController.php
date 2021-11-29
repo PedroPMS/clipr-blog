@@ -40,7 +40,6 @@ class CommentController extends AbstractController
      * )
      *
      * @OA\Tag(name="Comment")
-     * @Security(name="Bearer")
      */
     public function index(Post $post, CommentRepository $commentRepository): View
     {
@@ -98,7 +97,7 @@ class CommentController extends AbstractController
         $form->submit($body);
 
         if (!$form->isValid()) {
-            return View::create((new ValidationErrorsHandler())($form), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return (new ValidationErrorsHandler())($form);
         }
 
         $entityManager->persist($comment);
