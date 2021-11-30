@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostFromRedditType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Service\Post\PostService;
@@ -116,6 +117,52 @@ class PostController extends AbstractController
         $entityManager->persist($post);
         $entityManager->flush();
         return View::create($post, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @Rest\Post("/api/post/reddit", name="post_create_reddit")
+     * @Rest\View(serializerGroups={"post", "timestamps", "comment"})
+     *
+     * Create a post from reddit link.
+     *
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *     mediaType="application/json",
+     *          @OA\Schema(ref=@Model(type= App\Form\PostFromRedditType::class))
+     *     )
+     * )
+     *
+     * @OA\Response(
+     *     response=201,
+     *     description="Create a post from reddit",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type= App\Entity\Post::class, groups={"post", "timestamps", "comment"}))
+     *     )
+     * )
+     *
+     * @OA\Response(
+     *     response=422,
+     *     description="Invalid data"
+     * )
+     *
+     * @OA\Tag(name="Post")
+     * @Security(name="Bearer")
+     */
+    public function createFromReddit(Request $request, PostService $postService): View
+    {
+        $this->denyAccessUnlessGranted('ROLE_WRITER');
+
+        $body = json_decode($request->getContent(), true);
+
+        $form = $this->createForm(PostFromRedditType::class);
+        $form->submit($body);
+
+        if (!$form->isValid()) {
+            return (new ValidationErrorsHandler())($form);
+        }
+
+        return $postService->createFromReddit($this->getUser(), $body['link']);
     }
 
     /**
