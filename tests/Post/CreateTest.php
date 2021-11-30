@@ -57,4 +57,36 @@ class CreateTest extends BaseTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
+    public function test_attempt_to_create_a_new_post_from_reddit(): void
+    {
+        $client = $this->createAuthenticatedClient('writer@gmail.com');
+        $client->request(
+            'POST',
+            '/api/post/reddit',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'link' => 'https://www.reddit.com/r/AskUK/comments/r4slec/whats_the_most_aesthetically_depressing_town/?utm_source=share&utm_medium=web2x&context=3'
+            ])
+        );
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
+    }
+
+    public function test_attempt_to_create_a_new_post_from_reddit_with_invalid_data(): void
+    {
+        $client = $this->createAuthenticatedClient('writer@gmail.com');
+        $client->request(
+            'POST',
+            '/api/post/reddit',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([])
+        );
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
 }
