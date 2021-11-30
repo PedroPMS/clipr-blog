@@ -19,7 +19,7 @@ Create and initialize the database:
 ```
 php bin/console doctrine:database:create
 
-php bin/console doctrine:migrations:migrate 
+php bin/console doctrine:migrations:migrate
 ```
 
 Run the fixtures to populate th DB:
